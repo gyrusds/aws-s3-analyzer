@@ -1,0 +1,19 @@
+{
+    "bucket_name": "foo-bar",
+    "size": 9999,
+    "datetime": "2024-08-20 14:24:32",
+    "folders": [
+        {
+            "id": 7804499,
+            "name": "foo",
+            "size": 90000,
+            "children": []
+        },
+        {
+            "id": 35726338,
+            "name": "bar",
+            "size": 999,
+            "children": []
+        }
+    ]
+}

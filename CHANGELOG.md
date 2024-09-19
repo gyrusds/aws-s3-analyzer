@@ -8,8 +8,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## TO-DOs
 
 - Add analyzer tests.
-- Add backend tests.
 - Add frontend tests.
+
+## [Unreleased] XX-XX-XXXX
+
+### Added
+
+- Backend tests.
+- Github actions: Pylint.
 
 ## [1.1.0] 19-09-2024
 

@@ -1,3 +1,4 @@
+import os
 import json
 import logging
 from dotenv import load_dotenv
@@ -7,8 +8,6 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import ORJSONResponse
 
 import uvicorn
-
-OUTPUT_FOLDER = "output"
 
 app = FastAPI()
 
@@ -25,7 +24,7 @@ app.add_middleware(
 def get_summary():
 
     try:
-        with open(f"{OUTPUT_FOLDER}/summary.json") as f:
+        with open(f"{os.environ['OUTPUT_FOLDER']}/summary.json") as f:
             return json.load(f)
     except FileNotFoundError as ex:
         logging.error(ex)
@@ -36,7 +35,7 @@ def get_summary():
 def get_bucket(bucket_name: str):
 
     try:
-        with open(f"{OUTPUT_FOLDER}/{bucket_name}.json") as f:
+        with open(f"{os.environ['OUTPUT_FOLDER']}/{bucket_name}.json") as f:
             return json.load(f)
     except FileNotFoundError as ex:
         logging.error(ex)

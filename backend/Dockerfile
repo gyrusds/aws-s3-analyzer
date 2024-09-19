@@ -17,5 +17,7 @@ RUN pip install poetry && \
 # Copiar el código fuente
 COPY . /app
 
+ENV OUTPUT_FOLDER="output"
+
 # Establecer el comando de inicio
 CMD ["poetry", "run", "python", "src/main.py"]
