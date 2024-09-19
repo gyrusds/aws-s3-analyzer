@@ -1,0 +1,26 @@
+# terraform
+.terraform
+.terraform.lock.hcl
+terraform.tfstate.d
+
+# python
+coverage.xml
+__pycache__/
+.coverage
+
+# miscellaneous
+.idea
+
+# for local test
+.env
+.venv
+*.ipynb
+
+# we use this a temp folder to generate csv files
+out_invoices/
+# to ignore zephyr reports
+test_output/
+all_tests/
+temp_files/
+pruebas.py
+output/

@@ -1,0 +1,76 @@
+$text: #000000;
+
+.s3TreePage {
+  color: $text;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 2;
+  margin-top: 2%;
+  margin-bottom: 2%;
+  margin-left: 5%;
+  margin-right: 5%;
+}
+
+.title {
+  font-size: 30px;
+  font-weight: bold;
+}
+
+.tree {
+  font-size: large;
+  position: relative;
+  margin-top: 5%;
+
+  details {
+    padding-left: 3%;
+    padding-top: 1%;
+    position: relative;
+    outline: none;
+
+    &[disabled] summary,
+    &.disabled summary {
+      opacity: 50%;
+      pointer-events: none; /* prevents click events */
+      user-select: none; /* prevents text selection */
+    }
+    summary {
+      list-style: none;
+
+      &::-webkit-details-marker {
+        display: none;
+      }
+      &::-webkit-appearance {
+        display: none;
+      }
+
+      &:hover {
+        cursor: pointer;
+        font-weight: bold;
+      }
+
+      i {
+        font-size: 20px;
+        margin-left: -22px;
+        margin-right: 10px;
+        width: auto;
+      }
+      .selector {
+        position: absolute;
+        pointer-events: none;
+        border-bottom: 1px solid #383838;
+        z-index: -1;
+      }
+    }
+  }
+}
+
+.right {
+  float: right;
+}
+
+.loader {
+  margin-top: 15%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}

@@ -1,0 +1,19 @@
+[tool.poetry]
+name = "aws-s3-analyzer-backend"
+version = "0.1.0"
+description = ""
+authors = ["Javier Rodriguez <javier.rodriguez@bluetab.net>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.9"
+boto3 = "^1.34.149"
+fastapi = "^0.112.1"
+uvicorn = "^0.30.6"
+python-dotenv = "^1.0.1"
+pydantic = "^2.8.2"
+orjson = "^3.10.7"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

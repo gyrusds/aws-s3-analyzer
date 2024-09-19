@@ -1,0 +1,43 @@
+$bg_color: rgb(73, 147, 221);
+$text_color: #ffffff;
+
+aside {
+  background-color: $bg_color;
+  min-height: 100vh;
+  height: 100%;
+}
+
+.nav-menu-items {
+  width: 100%;
+  padding-left: 0%;
+}
+
+.nav-link {
+  text-decoration: none;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  padding: 10px 15px;
+  margin: 5px;
+  border-radius: 5px;
+  gap: 10px;
+  cursor: pointer;
+  background-color: $bg_color;
+  color: $text_color;
+  transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+  &[data-active="true"],
+  &:hover {
+    background-color: $text_color;
+    color: $bg_color;
+  }
+  &__name {
+    width: 100%;
+    flex: 1;
+    font-size: 18px;
+  }
+  &__size {
+    font-size: 14px;
+  }
+}

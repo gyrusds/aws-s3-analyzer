@@ -1,0 +1,31 @@
+
+[data-tooltip] {
+    position: relative;
+}
+
+[data-tooltip]:hover:after {
+    background: #a0cefd;
+    border-radius: 3px;
+    box-shadow: 5px 5px 20px #0000001a;
+    color: rgb(13 55 97);
+    content: attr(data-tooltip);
+    display: block;
+    font-size: 16px;
+    font-weight: 700;
+    left: 0;
+    padding: 7px 12px;
+    position: absolute;
+    top: calc(100% + 8px);
+    transform: translateX(-50%);
+    width: max-content;
+}
+[data-tooltip]:hover:before {
+    content: '';
+    background: #a0cefd;
+    width: 20px;
+    height: 20px;
+    transform: rotate(45deg);
+    top: calc(100% + 6px);
+    left: 0;
+    position: absolute;
+}

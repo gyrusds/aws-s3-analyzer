@@ -1,0 +1,5 @@
+.page {
+    display: grid;
+    grid-template-columns: 25% 1fr;
+    min-height: 100vh;
+}
