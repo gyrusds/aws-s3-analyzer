@@ -11,9 +11,7 @@ const pages = [
     element: <GeneralLayout />,
     loader: async () => {
       const data = await getBucketsList();
-      return data
-        .filter((item) => item.status === "done" || item.status === "manual")
-        .sort((a, b) => b.size - a.size);
+      return data;
     },
     children: [
       {

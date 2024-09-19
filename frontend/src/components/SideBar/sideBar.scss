@@ -26,7 +26,9 @@ aside {
   cursor: pointer;
   background-color: $bg_color;
   color: $text_color;
-  transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+  transition:
+    background-color 0.3s ease-in-out,
+    color 0.3s ease-in-out;
   &[data-active="true"],
   &:hover {
     background-color: $text_color;

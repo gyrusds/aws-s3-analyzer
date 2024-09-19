@@ -22,7 +22,7 @@ export default function SideBar() {
       <IconContext.Provider value={{ color: "undefined" }}>
         <nav className="nav-menu">
           <ul className="nav-menu-items" onClick={showSidebar}>
-            {items.map((item, idx) => {
+            {items.data.map((item, idx) => {
               return (
                 <NavLink
                   key={idx}

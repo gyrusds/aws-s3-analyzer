@@ -11,6 +11,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add backend tests.
 - Add frontend tests.
 
+## [1.1.0] 19-09-2024
+
+### Fix
+
+- Error page when there is no information.
+
+### Change
+
+- `logo192.png` and `logo512.png` images.
+
 ## [1.0.0] 19-09-2024
 
 First version.

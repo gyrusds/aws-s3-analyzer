@@ -1,15 +1,16 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, useLoaderData } from "react-router-dom";
 import SideBar from "../SideBar";
 import TopBar from "../TopBar";
 import "./generalLayout.scss";
 
 export const GeneralLayout = () => {
+  const items = useLoaderData();
   return (
     <>
       <TopBar />
       <div className="page">
         <SideBar />
-        <Outlet />
+        <Outlet context={items} />
       </div>
     </>
   );
