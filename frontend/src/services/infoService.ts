@@ -7,16 +7,25 @@ const api_url = "http://0.0.0.0:8000";
  * @returns A promise that resolves with the bucket list data.
  */
 export const getBucketsList = async () => {
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     axios
       .get(`${api_url}`)
       .then((response) => {
-        return response.data;
+        return resolve({
+          data: response.data
+          .filter((item) => item.status === "done" || item.status === "manual")
+          .sort((a, b) => b.size - a.size),
+          error: false,
+        });
       })
       .then((data) => resolve(data))
       .catch((error) => {
         console.error("Error fetching summary:", error);
-        reject(error);
+        return resolve({
+          data: [],
+          error: true,
+          message: error,
+        });
       });
   });
 };
