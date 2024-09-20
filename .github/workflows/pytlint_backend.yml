@@ -1,0 +1,9 @@
+name: Backend Pylint
+
+on: [push]
+
+jobs:
+  backend-pylint:
+    uses: ./.github/workflows/pylint.yml
+    with:
+      code-path: backend
