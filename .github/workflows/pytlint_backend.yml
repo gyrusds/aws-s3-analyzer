@@ -4,6 +4,6 @@ on: [push]
 
 jobs:
   backend-pylint:
-    uses: ./.github/workflows/pylint.yml
+    uses: ./.github/workflows/pytlint.yml
     with:
       code-path: backend
