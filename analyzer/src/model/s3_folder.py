@@ -107,7 +107,7 @@ class S3Folder():
                 - 'id' (int): A randomly generated integer between 1 and 100000000.
                 - 'name' (str): The name of the S3 folder.
                 - 'size' (int): The size of the S3 folder.
-                - 'children' (list): A list of dictionaries, each representing a child S3Folder object, 
+                - 'children' (list): A list of dictionaries, each representing a child S3Folder object,
                   encoded using the same json_encoder method.
         """
         return {
