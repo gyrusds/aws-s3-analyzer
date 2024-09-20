@@ -2,12 +2,31 @@ import json
 import logging
 import argparse
 from dotenv import load_dotenv
-from methods.analyzer import Analyzer, AnalyzerException, AlreadyAnalyzedException
+from src.methods.analyzer import Analyzer, AnalyzerException, AlreadyAnalyzedException
 
 OUTPUT_FOLDER = "../backend/output"
 
 
 def main(include_buckets: str = "", exclude_buckets: str = ""):
+    """
+    Main function to analyze AWS S3 buckets.
+
+    This function initializes the Analyzer, loads the current summary from a JSON file,
+    and processes the list of all buckets. It filters the buckets based on the include
+    and exclude lists, performs analysis on each bucket, and updates the summary.
+
+    Args:
+        include_buckets (str): Comma-separated list of bucket names to include in the analysis.
+        exclude_buckets (str): Comma-separated list of bucket names to exclude from the analysis.
+
+    Raises:
+        FileNotFoundError: If the summary JSON file is not found.
+        AlreadyAnalyzedException: If a bucket has already been analyzed.
+        AnalyzerException: If an error occurs during the analysis of a bucket.
+
+    Returns:
+        None
+    """
     analyzer = Analyzer(OUTPUT_FOLDER)
     all_buckets = analyzer.all_buckets()
 
@@ -15,10 +34,10 @@ def main(include_buckets: str = "", exclude_buckets: str = ""):
     ex_buckets = exclude_buckets.split(",") if exclude_buckets else []
 
     try:
-        with open(f"{OUTPUT_FOLDER}/summary.json") as f:
+        with open(f"{OUTPUT_FOLDER}/summary.json", encoding="utf-8") as f:
             current_summary = json.load(f)
         logging.info(
-            f"Loaded summary from {OUTPUT_FOLDER}/summary.json. There are {len(current_summary)} buckets")
+            "Loaded summary from %s/summary.json. There are %i buckets", OUTPUT_FOLDER, len(current_summary))
     except FileNotFoundError:
         current_summary = []
 
@@ -27,7 +46,7 @@ def main(include_buckets: str = "", exclude_buckets: str = ""):
             bucket for bucket in all_buckets if bucket in in_buckets]
 
     summary = []
-    logging.info(f"Starting analysis for {len(all_buckets)} buckets")
+    logging.info("Starting analysis for %i buckets", len(all_buckets))
     for bucket in all_buckets:
         if bucket in ex_buckets:
             summary.append({
@@ -36,13 +55,14 @@ def main(include_buckets: str = "", exclude_buckets: str = ""):
                 "status": "excluded"
             })
         elif bucket in [b["bucket_name"] for b in current_summary]:
-            logging.info(f"Skipping {bucket} as it has already been analyzed")
+            logging.info("Skipping %s as it has already been analyzed", bucket)
             summary.extend(
                 [b for b in current_summary if b["bucket_name"] == bucket])
         else:
             try:
                 size = analyzer.analyze(bucket)
-                logging.info(f"Analysis for {bucket} completed. Size: {size}")
+                logging.info(
+                    "Analysis for %s completed. Size: %i", bucket, size)
                 summary.append({
                     "bucket_name": bucket,
                     "size": size,
@@ -56,14 +76,14 @@ def main(include_buckets: str = "", exclude_buckets: str = ""):
                     "status": "done"
                 })
             except AnalyzerException as ex:
-                logging.error(f"Analysis for {bucket} failed: {ex}")
+                logging.error("Analysis for %s failed: %s", bucket, ex)
                 summary.append({
                     "bucket_name": bucket,
                     "size": 0,
                     "status": "failed",
                     "error": str(ex)
                 })
-        with open(f"{OUTPUT_FOLDER}/summary.json", 'w') as f:
+        with open(f"{OUTPUT_FOLDER}/summary.json", 'w', encoding="utf-8") as f:
             f.write(json.dumps(summary, indent=4))
 
 

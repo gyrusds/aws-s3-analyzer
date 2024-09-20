@@ -1,0 +1,31 @@
+name: Reusable Pylint
+
+on:
+  workflow_call:
+    inputs:
+      code-path:
+        description: 'The path to the code to lint'
+        required: true
+        type: string
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.9", "3.10"]
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v3
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: Install dependencies
+      working-directory: ${{ inputs.code-path }}
+      run: |
+        pipx install poetry
+        poetry install
+    - name: Analysing the code with pylint
+      working-directory: ${{ inputs.code-path }}
+      run: |
+        poetry run pylint src

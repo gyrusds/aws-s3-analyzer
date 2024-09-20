@@ -7,9 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## TO-DOs
 
-- Add analyzer tests.
-- Add backend tests.
 - Add frontend tests.
+
+## [1.2.0] 20-09-2024
+
+### Added
+
+- Analyzer tests
+- Backend tests.
+- Github actions: Pylint.
 
 ## [1.1.0] 19-09-2024
 

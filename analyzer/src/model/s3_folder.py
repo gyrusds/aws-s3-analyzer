@@ -24,7 +24,7 @@ class S3Folder():
     - __iter__(): Returns an iterator that iterates over the folder and its children.
     """
 
-    def __init__(self, name: str, size: int = 0, children: list = [], tree_depth: int = None):
+    def __init__(self, name: str, size: int = 0, children: list = None, tree_depth: int = None):
         self.logger = logging.getLogger(__name__)
         path = name.split('/')
         self.name = path[0]
@@ -43,6 +43,12 @@ class S3Folder():
                     S3Folder('/'.join(path[1:]), size, tree_depth=tree_depth - 1))
 
     def add_child(self, child):
+        """
+        Adds a child node to the current S3 folder.
+
+        Args:
+            child: The child node to be added to the current folder.
+        """
         self.children.append(child)
 
     def __str__(self, indent: str = ''):
@@ -93,6 +99,17 @@ class S3Folder():
             yield from child
 
     def json_encoder(self):
+        """
+        Encodes the S3Folder object into a JSON-serializable dictionary.
+
+        Returns:
+            dict: A dictionary containing the following keys:
+                - 'id' (int): A randomly generated integer between 1 and 100000000.
+                - 'name' (str): The name of the S3 folder.
+                - 'size' (int): The size of the S3 folder.
+                - 'children' (list): A list of dictionaries, each representing a child S3Folder object,
+                  encoded using the same json_encoder method.
+        """
         return {
             'id': random.randint(1, 100000000),
             'name': self.name,
