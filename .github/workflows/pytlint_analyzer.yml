@@ -1,0 +1,9 @@
+name: Analyzer Pylint
+
+on: [push]
+
+jobs:
+  analyzer-pylint:
+    uses: ./.github/workflows/pytlint.yml
+    with:
+      code-path: analyzer

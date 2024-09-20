@@ -1,11 +1,11 @@
 import os
 import logging
-import boto3
 import json
 from datetime import datetime
+import boto3
 from botocore.exceptions import ClientError
 
-from model.s3_tree import S3Tree, TooManyFilesException
+from src.model.s3_tree import tree, TooManyFilesException
 
 
 class Analyzer():
@@ -56,37 +56,59 @@ class Analyzer():
         output_file = f"{self.output_folder}/{bucket}.json"
 
         if not overwrite and os.path.exists(output_file):
-            with open(output_file) as f:
+            with open(output_file, encoding='utf-8') as f:
                 data = json.load(f)
             raise AlreadyAnalyzedException(bucket, data["size"])
         try:
             logging.info("Processing bucket: %s", bucket)
-            s3_tree = S3Tree(bucket)
-            s3_folders = s3_tree.tree(
-                tree_depth=os.environ.get("TREE_DEPTH", 4))
+            s3_folders = tree(
+                bucket=bucket,
+                tree_depth=os.environ.get("TREE_DEPTH", 4)
+            )
 
             data = {
                 "bucket_name": bucket,
-                "size": sum([f.size for f in s3_folders]),
+                "size": sum(f.size for f in s3_folders),
                 "datetime": f'{datetime.now().strftime("%Y-%m-%d %H:%M:%S")}',
                 "folders": [f.json_encoder() for f in s3_folders]
             }
-            with open(output_file, 'w') as f:
+            with open(output_file, 'w', encoding='utf-8') as f:
                 f.write(json.dumps(data, indent=4))
 
             return data["size"]
-        except TooManyFilesException as ex:
+        except (ClientError, TooManyFilesException) as ex:
             logging.error(ex)
-            raise AnalyzerException(ex)
-        except ClientError as ex:
-            logging.error(ex)
+            raise AnalyzerException(str(ex), bucket) from ex
 
 
 class AnalyzerException(Exception):
-    pass
+    """
+    Custom exception class for the Analyzer module.
+
+    This exception is raised for errors specific to the Analyzer's operations.
+
+    Attributes:
+        None
+
+    Methods:
+        None
+    """
+
+    def __init__(self, message, bucket):
+        self.message = message
+        self.bucket = bucket
+        super().__init__(self.message)
 
 
 class AlreadyAnalyzedException(Exception):
+    """
+    Exception raised when an attempt is made to analyze an already analyzed S3 bucket.
+
+    Attributes:
+        bucket (str): The name of the S3 bucket.
+        size (int): The size of the S3 bucket.
+        message (str): Explanation of the error.
+    """
 
     def __init__(self, bucket, size):
         self.bucket = bucket
