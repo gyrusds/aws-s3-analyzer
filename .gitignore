@@ -24,3 +24,6 @@ all_tests/
 temp_files/
 pruebas.py
 output/
+
+# docs
+Gemfile.lock

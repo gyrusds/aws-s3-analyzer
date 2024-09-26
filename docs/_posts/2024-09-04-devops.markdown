@@ -1,0 +1,13 @@
+---
+layout: post
+title: "Devops"
+permalink: "devops"
+---
+
+## Description
+
+Deployed on two containers: frontend and backend.
+
+## Technologies
+
+Docker Compose.
